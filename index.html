@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Projet EPS - Handball</title>
+<title>Site EPS - Handball Complet</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 <style>
 body {
@@ -11,7 +11,7 @@ body {
   background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   color:white;
   text-align:center;
-  padding:50px;
+  padding:30px;
 }
 header{
   padding:40px;
@@ -20,9 +20,9 @@ header{
 .card{
   background:white;
   color:#333;
-  width:80%;
-  margin:30px auto;
-  padding:30px;
+  width:85%;
+  margin:25px auto;
+  padding:25px;
   border-radius:20px;
   box-shadow:0 10px 30px rgba(0,0,0,0.4);
   animation: fadeIn 2s ease;
@@ -57,23 +57,52 @@ footer{
 }
 .correct {color:green;}
 .wrong {color:red;}
-@keyframes fadeIn{
-  from{opacity:0;}
-  to{opacity:1;}
+.lesson-img{
+  width:100%;
+  max-width:500px;
+  border-radius:15px;
+  margin:10px 0;
 }
-@keyframes slideDown{
-  from{transform:translateY(-50px);opacity:0;}
-  to{transform:translateY(0);opacity:1;}
+video{
+  width:100%;
+  max-width:500px;
+  border-radius:15px;
+  margin:10px 0;
 }
+iframe{
+  width:100%;
+  max-width:500px;
+  height:300px;
+  border-radius:15px;
+  margin:10px 0;
+}
+.progress-container{
+  width:85%;
+  background:#ddd;
+  border-radius:15px;
+  margin:20px auto;
+}
+.progress-bar{
+  width:0%;
+  height:20px;
+  background:#2c5364;
+  border-radius:15px;
+  text-align:center;
+  color:white;
+  line-height:20px;
+}
+@keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+@keyframes slideDown{from{transform:translateY(-50px);opacity:0;} to{transform:translateY(0);opacity:1;}}
 </style>
 </head>
 <body>
 
 <header>
-<h1>Projet Pédagogique - Handball</h1>
+<h1>Site EPS - Handball Complet</h1>
 <h3>Matériel de Protection & Sécurité</h3>
 </header>
 
+<!-- Informations personnelles -->
 <div class="card">
 <h2>Oumaima Kadri</h2>
 <p>Centre Régional des Métiers de l’Éducation et de la Formation</p>
@@ -83,6 +112,33 @@ footer{
 <p>📧 kadrioumayma3@gmail.com</p>
 <br>
 <button onclick="window.print()">📥 Télécharger le cours PDF</button>
+</div>
+
+<!-- Progress bar -->
+<div class="progress-container">
+<div class="progress-bar" id="progressBar">0%</div>
+</div>
+
+<!-- Contenu du cours -->
+<div class="card">
+<h3>Leçon: Handball et Matériel de Protection</h3>
+<p>Le handball est un sport collectif dynamique. Il est important d’utiliser le matériel de protection pour prévenir les blessures.</p>
+
+<h4>Équipements essentiels:</h4>
+<ul>
+<li>Protège-mains : protège les doigts et la paume</li>
+<li>Genouillères : évitent les blessures lors des chutes</li>
+<li>Casque (si nécessaire)</li>
+<li>Chaussures adaptées : pour éviter les glissades</li>
+</ul>
+
+<h4>Images professionnelles:</h4>
+<img class="lesson-img" src="https://images.unsplash.com/photo-1581091870622-b3d5c0e03142?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTI1MTd8MHwxfHNlYXJjaHwxfHxIYW5kYmFsbCUyMEdhbWV8ZW58MHx8fHwxNjc2MjY2MDQx&ixlib=rb-4.0.3&q=80&w=400" alt="Handball Action">
+<img class="lesson-img" src="https://images.unsplash.com/photo-1584023339142-3c40e2e292e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="Handball Gear">
+
+<h4>Vidéos pédagogiques:</h4>
+<iframe src="https://www.youtube.com/embed/1i7GB9qX7A0" title="Handball Skills Video" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/8nF0lO-6y1U" title="Handball Safety Video" allowfullscreen></iframe>
 </div>
 
 <!-- QCM Section -->
@@ -97,6 +153,11 @@ footer{
 <input type="radio" name="q2" value="correct"> Protège-mains<br>
 <input type="radio" name="q2" value="wrong"> Casque<br>
 <input type="radio" name="q2" value="wrong"> Genouillères<br><br>
+
+<p>3. Quelle règle de sécurité est prioritaire ?</p>
+<input type="radio" name="q3" value="correct"> Respecter le matériel et les autres joueurs<br>
+<input type="radio" name="q3" value="wrong"> Ignorer les règles<br>
+<input type="radio" name="q3" value="wrong"> Jouer sans protection<br><br>
 
 <button onclick="verifierQCM()">Vérifier réponses</button>
 <p id="resultat"></p>
@@ -123,16 +184,24 @@ function verifierQCM(){
   let score = 0;
   let q1 = document.querySelector('input[name="q1"]:checked');
   let q2 = document.querySelector('input[name="q2"]:checked');
+  let q3 = document.querySelector('input[name="q3"]:checked');
   if(q1 && q1.value === 'correct') score++;
   if(q2 && q2.value === 'correct') score++;
+  if(q3 && q3.value === 'correct') score++;
   let message = "";
-  if(score === 2){
+  if(score === 3){
     message = "<span class='correct'>Bravo ! Toutes les réponses sont correctes.</span>";
     alert("Félicitations ! Tu as terminé le QCM.");
   } else {
     message = "<span class='wrong'>Certaines réponses sont incorrectes, réessayez !</span>";
   }
   document.getElementById('resultat').innerHTML = message;
+
+  // Progress bar
+  let progress = (score/3)*100;
+  let bar = document.getElementById('progressBar');
+  bar.style.width = progress+"%";
+  bar.innerHTML = Math.round(progress)+"%";
 }
 
 // Animation simple
@@ -153,7 +222,7 @@ function telechargerCertificat(){
   doc.setFontSize(16);
   doc.text("Félicitations !", 20, 50);
   doc.text("Vous avez complété le cours de Handball.", 20, 60);
-  doc.text("Nom: Oumaima Kadri", 20, 75);
+  doc.text("Nom: Oumayma Kadri", 20, 75);
   doc.text("Centre: CRMEF Fès-Meknès", 20, 85);
   doc.save("Certificat_Handball.pdf");
 }
