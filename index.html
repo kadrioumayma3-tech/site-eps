@@ -35,6 +35,7 @@ button{
   border-radius:10px;
   cursor:pointer;
   transition:0.3s;
+  margin:10px;
 }
 button:hover{
   background:#0f2027;
@@ -45,6 +46,17 @@ footer{
   padding:20px;
   background:#111;
 }
+.qcm{
+  background:#f4f4f4;
+  color:#333;
+  border-radius:15px;
+  padding:20px;
+  margin:20px auto;
+  width:80%;
+  text-align:left;
+}
+.correct {color:green;}
+.wrong {color:red;}
 @keyframes fadeIn{
   from{opacity:0;}
   to{opacity:1;}
@@ -55,7 +67,6 @@ footer{
 }
 </style>
 </head>
-
 <body>
 
 <header>
@@ -67,12 +78,86 @@ footer{
 <h2>Oumaima Kadri</h2>
 <p>Centre Régional des Métiers de l’Éducation et de la Formation</p>
 <p>Région Fès-Meknès</p>
-<p>Spécialité : Education Physiques et Sportives</p>
+<p>Spécialité : Éducation Physiques et Sportives</p>
 <p>📞 0647570775</p>
 <p>📧 kadrioumayma3@gmail.com</p>
 <br>
-<button onclick="window.print()">📥 Télécharger le cours</button>
+<button onclick="window.print()">📥 Télécharger le cours PDF</button>
 </div>
+
+<!-- QCM Section -->
+<div class="qcm">
+<h3>QCM Handball</h3>
+<p>1. Quel est le rôle du matériel de protection ?</p>
+<input type="radio" name="q1" value="wrong"> Protéger l'environnement<br>
+<input type="radio" name="q1" value="correct"> Protéger le joueur<br>
+<input type="radio" name="q1" value="wrong"> Décorer le terrain<br><br>
+
+<p>2. Quel équipement est indispensable pour les mains ?</p>
+<input type="radio" name="q2" value="correct"> Protège-mains<br>
+<input type="radio" name="q2" value="wrong"> Casque<br>
+<input type="radio" name="q2" value="wrong"> Genouillères<br><br>
+
+<button onclick="verifierQCM()">Vérifier réponses</button>
+<p id="resultat"></p>
+</div>
+
+<!-- Animation simple -->
+<div class="card">
+<h3>Animation:</h3>
+<p id="animate" style="font-weight:bold;">Apprenez et amusez-vous !</p>
+</div>
+
+<!-- Certificat Section -->
+<div class="card">
+<h3>🏆 Votre certificat de participation</h3>
+<p>Félicitations ! Vous avez terminé le cours de Handball.</p>
+<button onclick="telechargerCertificat()">📥 Télécharger le certificat PDF</button>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// QCM Checker
+function verifierQCM(){
+  let score = 0;
+  let q1 = document.querySelector('input[name="q1"]:checked');
+  let q2 = document.querySelector('input[name="q2"]:checked');
+  if(q1 && q1.value === 'correct') score++;
+  if(q2 && q2.value === 'correct') score++;
+  let message = "";
+  if(score === 2){
+    message = "<span class='correct'>Bravo ! Toutes les réponses sont correctes.</span>";
+    alert("Félicitations ! Tu as terminé le QCM.");
+  } else {
+    message = "<span class='wrong'>Certaines réponses sont incorrectes, réessayez !</span>";
+  }
+  document.getElementById('resultat').innerHTML = message;
+}
+
+// Animation simple
+let animateText = document.getElementById("animate");
+let phrases = ["Apprenez et amusez-vous !", "Sécurité d'abord !", "Matériel prêt !"];
+let i=0;
+setInterval(()=>{
+  animateText.textContent = phrases[i];
+  i = (i+1) % phrases.length;
+}, 2000);
+
+// Certificat PDF
+function telechargerCertificat(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(22);
+  doc.text("Certificat de Participation", 20, 30);
+  doc.setFontSize(16);
+  doc.text("Félicitations !", 20, 50);
+  doc.text("Vous avez complété le cours de Handball.", 20, 60);
+  doc.text("Nom: Oumaima Kadri", 20, 75);
+  doc.text("Centre: CRMEF Fès-Meknès", 20, 85);
+  doc.save("Certificat_Handball.pdf");
+}
+</script>
 
 <footer>
 © 2026 - Projet EPS Professionnel
